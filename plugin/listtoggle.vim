@@ -30,7 +30,7 @@ let g:lt_quickfix_list_toggle_map =
       \ get( g:, 'lt_quickfix_list_toggle_map', '<leader>q' )
 
 " If the user has explicitly set some mappings, then we don't use <unique> when
-" creating the mappings; the user obviously wants to use these mappings
+" creating the mappings; the user obviously wants to use them
 if g:lt_location_list_toggle_map != '<leader>l' ||
       \ g:lt_quickfix_list_toggle_map != '<leader>q'
   let s:unique = ''
