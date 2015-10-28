@@ -18,11 +18,6 @@
 "
 " See ':help listtoggle' for more information.
 
-if exists('g:loaded_listtoggle')
-  finish
-endif
-let g:loaded_listtoggle = 1
-
 let g:lt_height = get( g:, 'lt_height', 10 )
 let g:lt_location_list_toggle_map =
       \ get( g:, 'lt_location_list_toggle_map', '<leader>l' )
@@ -46,39 +41,22 @@ execute "nnoremap " . s:unique . " <silent> " .
 command! QToggle call <sid>QListToggle()
 command! LToggle call <sid>LListToggle()
 
-
 function! s:LListToggle()
-  if exists("s:quickfix_buffer_number")
+    let b_num_before = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
     silent! lclose
-  else
-    execute "silent! lopen " . g:lt_height
-  endif
-endfunction
+    let b_num_after = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 
+    if b_num_after == b_num_before
+        execute "silent! lopen " . g:lt_height
+    endif
+endfunction
 
 function! s:QListToggle()
-  if exists("s:quickfix_buffer_number")
+    let b_num_before = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
     silent! cclose
-  else
-    execute "silent! botright copen " . g:lt_height
-  endif
+    let b_num_after = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+
+    if b_num_after == b_num_before
+        execute "silent! botright copen " . g:lt_height
+    endif
 endfunction
-
-
-function s:CheckIsQuickfixWindowClosing()
-  if exists("s:quickfix_buffer_number") &&
-        \ expand("<abuf>") == s:quickfix_buffer_number
-    unlet! s:quickfix_buffer_number
-  endif
-endfunction
-
-
-function s:GetQuickFixBufferNumber()
-  let s:quickfix_buffer_number = bufnr('$')
-endfunction
-
-
-augroup ListToggle
-  autocmd BufWinEnter quickfix call s:GetQuickFixBufferNumber()
-  autocmd BufWinLeave * call s:CheckIsQuickfixWindowClosing()
-augroup END
