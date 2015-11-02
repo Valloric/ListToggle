@@ -18,6 +18,11 @@
 "
 " See ':help listtoggle' for more information.
 
+if exists('g:loaded_listtoggle')
+  finish
+endif
+let g:loaded_listtoggle = 1
+
 let g:lt_height = get( g:, 'lt_height', 10 )
 let g:lt_location_list_toggle_map =
       \ get( g:, 'lt_location_list_toggle_map', '<leader>l' )
