@@ -47,21 +47,23 @@ command! QToggle call <sid>QListToggle()
 command! LToggle call <sid>LListToggle()
 
 function! s:LListToggle()
-    let buffer_count_before = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    let buffer_count_before = s:BufferCount()
     silent! lclose
-    let buffer_count_after = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 
-    if buffer_count_before == buffer_count_after
+    if s:BufferCount() == buffer_count_before
         execute "silent! lopen " . g:lt_height
     endif
 endfunction
 
 function! s:QListToggle()
-    let buffer_count_before = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    let buffer_count_before = s:BufferCount()
     silent! cclose
-    let buffer_count_after = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 
-    if buffer_count_before == buffer_count_after
+    if s:BufferCount() == buffer_count_before
         execute "silent! botright copen " . g:lt_height
     endif
+endfunction
+
+function! s:BufferCount()
+    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction
