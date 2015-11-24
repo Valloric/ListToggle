@@ -46,39 +46,24 @@ execute "nnoremap " . s:unique . " <silent> " .
 command! QToggle call <sid>QListToggle()
 command! LToggle call <sid>LListToggle()
 
-
 function! s:LListToggle()
-  if exists("s:quickfix_buffer_number")
+    let buffer_count_before = s:BufferCount()
     silent! lclose
-  else
-    execute "silent! lopen " . g:lt_height
-  endif
-endfunction
 
+    if s:BufferCount() == buffer_count_before
+        execute "silent! lopen " . g:lt_height
+    endif
+endfunction
 
 function! s:QListToggle()
-  if exists("s:quickfix_buffer_number")
+    let buffer_count_before = s:BufferCount()
     silent! cclose
-  else
-    execute "silent! botright copen " . g:lt_height
-  endif
+
+    if s:BufferCount() == buffer_count_before
+        execute "silent! botright copen " . g:lt_height
+    endif
 endfunction
 
-
-function s:CheckIsQuickfixWindowClosing()
-  if exists("s:quickfix_buffer_number") &&
-        \ expand("<abuf>") == s:quickfix_buffer_number
-    unlet! s:quickfix_buffer_number
-  endif
+function! s:BufferCount()
+    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction
-
-
-function s:GetQuickFixBufferNumber()
-  let s:quickfix_buffer_number = bufnr('$')
-endfunction
-
-
-augroup ListToggle
-  autocmd BufWinEnter quickfix call s:GetQuickFixBufferNumber()
-  autocmd BufWinLeave * call s:CheckIsQuickfixWindowClosing()
-augroup END
