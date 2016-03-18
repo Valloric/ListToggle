@@ -49,6 +49,7 @@ command! LToggle call <sid>LListToggle()
 function! s:LListToggle()
     let buffer_count_before = s:BufferCount()
     silent! lclose
+    silent! lclose
 
     if s:BufferCount() == buffer_count_before
         execute "silent! lopen " . g:lt_height
