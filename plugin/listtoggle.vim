@@ -43,8 +43,8 @@ execute "nnoremap " . s:unique . " <silent> " .
 execute "nnoremap " . s:unique . " <silent> " .
       \ g:lt_quickfix_list_toggle_map . " :QToggle<CR>"
 
-command! QToggle call <sid>QListToggle()
-command! LToggle call <sid>LListToggle()
+command!  QToggle call s:QListToggle()
+command!  LToggle call s:LListToggle()
 
 function! s:LListToggle()
     let buffer_count_before = s:BufferCount()
