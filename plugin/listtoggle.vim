@@ -24,27 +24,25 @@ endif
 let g:loaded_listtoggle = 1
 
 let g:lt_height = get( g:, 'lt_height', 10 )
-let g:lt_location_list_toggle_map =
-      \ get( g:, 'lt_location_list_toggle_map', '<leader>l' )
-let g:lt_quickfix_list_toggle_map =
-      \ get( g:, 'lt_quickfix_list_toggle_map', '<leader>q' )
 
-" If the user has explicitly set some mappings, then we don't use <unique> when
-" creating the mappings; the user obviously wants to use them
-if g:lt_location_list_toggle_map != '<leader>l' ||
-      \ g:lt_quickfix_list_toggle_map != '<leader>q'
-  let s:unique = ''
-else
-  let s:unique = '<unique>'
+if !hasmapto('<Plug>QToggle')
+  nmap <unique> <Leader>q <Plug>QToggle
 endif
 
-execute "nnoremap " . s:unique . " <silent> " .
-      \ g:lt_location_list_toggle_map . " :LToggle<CR>"
-execute "nnoremap " . s:unique . " <silent> " .
-      \ g:lt_quickfix_list_toggle_map . " :QToggle<CR>"
+if !hasmapto('<Plug>LToggle')
+  nmap <unique> <Leader>l <Plug>LToggle
+endif
 
-command!  QToggle call s:QListToggle()
-command!  LToggle call s:LListToggle()
+nnoremap <unique> <silent> <Plug>QToggle :call <SID>QListToggle()<CR>
+nnoremap <unique> <silent> <Plug>LToggle :call <SID>LListToggle()<CR>
+
+if !exists(":QToggle")
+  command -nargs=0  QToggle :call s:QListToggle()
+endif
+
+if !exists(":Ltoggle")
+  command -nargs=0  LToggle :call s:LListToggle()
+endif
 
 function! s:LListToggle()
     let buffer_count_before = s:BufferCount()
