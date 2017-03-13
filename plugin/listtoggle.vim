@@ -24,24 +24,6 @@ endif
 let g:loaded_listtoggle = 1
 
 let g:lt_height = get( g:, 'lt_height', 10 )
-let g:lt_location_list_toggle_map =
-      \ get( g:, 'lt_location_list_toggle_map', '<leader>l' )
-let g:lt_quickfix_list_toggle_map =
-      \ get( g:, 'lt_quickfix_list_toggle_map', '<leader>q' )
-
-" If the user has explicitly set some mappings, then we don't use <unique> when
-" creating the mappings; the user obviously wants to use them
-if g:lt_location_list_toggle_map != '<leader>l' ||
-      \ g:lt_quickfix_list_toggle_map != '<leader>q'
-  let s:unique = ''
-else
-  let s:unique = '<unique>'
-endif
-
-execute "nnoremap " . s:unique . " <silent> " .
-      \ g:lt_location_list_toggle_map . " :LToggle<CR>"
-execute "nnoremap " . s:unique . " <silent> " .
-      \ g:lt_quickfix_list_toggle_map . " :QToggle<CR>"
 
 command!  QToggle call s:QListToggle()
 command!  LToggle call s:LListToggle()
