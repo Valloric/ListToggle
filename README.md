@@ -7,8 +7,8 @@ location-list. Install it with [Vundle][] or [Pathogen][] (I recommend Vundle).
 You can set the key mappings for toggling Vim's `locationlist` and `quickfix`
 windows in your vimrc file:
 
-    let g:lt_location_list_toggle_map = '<leader>l'
-    let g:lt_quickfix_list_toggle_map = '<leader>q'
+    nmap <Leader>q <Plug>QToggle
+    nmap <Leader>l <Plug>Ltoggle
 
 By default, they are set to `<leader>l` and `<leader>q`, respectively.
 
