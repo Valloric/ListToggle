@@ -46,7 +46,7 @@ execute "nnoremap " . s:unique . " <silent> " .
 command!  QToggle call s:QListToggle()
 command!  LToggle call s:LListToggle()
 
-function! s:LListToggle()
+function! s:LListToggle() abort
     let buffer_count_before = s:BufferCount()
     " Location list can't be closed if there's cursor in it, so we need 
     " to call lclose twice to move cursor to the main pane
@@ -58,7 +58,7 @@ function! s:LListToggle()
     endif
 endfunction
 
-function! s:QListToggle()
+function! s:QListToggle() abort
     let buffer_count_before = s:BufferCount()
     silent! cclose
 
@@ -67,6 +67,6 @@ function! s:QListToggle()
     endif
 endfunction
 
-function! s:BufferCount()
+function! s:BufferCount() abort
     return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction
