@@ -68,5 +68,5 @@ function! s:QListToggle() abort
 endfunction
 
 function! s:BufferCount() abort
-    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    return len(filter(range(1, bufnr('$')), 'bufwinnr(v:val) != -1'))
 endfunction
